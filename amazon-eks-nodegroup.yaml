@@ -238,7 +238,7 @@ Parameters:
   BootstrapArguments:
     Description: Arguments to pass to the bootstrap script. See files/bootstrap.sh in https://github.com/awslabs/amazon-eks-ami
     Type: String
-    Default: ""
+    Default: "--kubelet-extra-args '--kube-reserved memory=0.3Gi,ephemeral-storage=1Gi --system-reserved memory=0.2Gi,ephemeral-storage=1Gi --eviction-hard memory.available<200Mi,nodefs.available<10%'"
 
   NodeGroupName:
     Description: Unique identifier for the Node Group.
@@ -419,6 +419,7 @@ Resources:
           Ebs:
             VolumeSize: !Ref NodeVolumeSize
             VolumeType: gp2
+            Encrypted: true
             DeleteOnTermination: true
       UserData:
         Fn::Base64:
